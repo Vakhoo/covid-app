@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CovidController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -15,17 +16,17 @@ use App\Http\Controllers\AuthController;
 |f
 */
 
-Route::middleware('app-locale')->prefix('{locale}')->group(function (){
+Route::prefix('{locale?}')->middleware('app-locale')->group(function (){
     Route::group(['middleware' => ['auth:sanctum']], function () {
-        Route::get("/user", function (Request $request) {
-            return 1;
-        });
-        Route::post('/logout', ['App\Http\Controllers\AuthController', 'logout']);
-
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/country', [CountryController::class, 'index']);
+        Route::get('/covid', [CovidController::class, 'index']);
+        Route::get('/summary', [CovidController::class, 'summary']);
     });
 
     Route::post("/login", [AuthController::class, 'login'])->name('login');
-    Route::post('/register', ['App\Http\Controllers\AuthController', 'register']);
+    Route::get("/login", [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
 

@@ -11,19 +11,18 @@ class AppLocale
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse) $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!in_array($request->segment(2), config('app.available_locales'))) {
+        if (!in_array($request->segment(2), config('app.locales'))) {
             abort(400);
         }
 
         App::setLocale($request->segment(2));
 
-        //
         return $next($request);
     }
 }

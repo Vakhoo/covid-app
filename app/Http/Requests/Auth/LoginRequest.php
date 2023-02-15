@@ -23,9 +23,16 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'email' => 'required|string',
-            'password' => 'required|string|confirmed'
+        $data = [
         ];
+        if ($this->method() !== 'GET') {
+            $data = [
+                'email' => 'required|string',
+                'password' => 'required|string|confirmed'
+            ];
+
+        }
+        return $data;
+
     }
 }
