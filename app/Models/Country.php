@@ -2,21 +2,23 @@
 
 namespace App\Models;
 
+use App\Models\Translations\CountryTranslation;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Translatable\HasTranslations;
 
 class Country extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory, Translatable;
 
     protected $fillable = [
-        'code',
-        'name'
+        'code'
     ];
 
-    public $translatable = ['name'];
+    protected $translationModel = CountryTranslation::class;
+
+    public $translatedAttributes = ['name'];
 
     public function covidData(): HasMany
     {

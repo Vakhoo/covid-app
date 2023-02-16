@@ -21,6 +21,6 @@ class CovidData extends Model
 
     public function country(): BelongsTo
     {
-        return $this->belongsTo(Country::class,'country_id')->select('id', 'code', 'name');
+        return $this->belongsTo(Country::class,'country_id')->select('id', 'code');
     }
 }

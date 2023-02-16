@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Country;
 use App\Repositories\Base\BaseRepository;
+use Illuminate\Support\Facades\App;
 
 class CountryRepository extends BaseRepository implements CountryRepositoryInterface
 {
@@ -19,10 +20,15 @@ class CountryRepository extends BaseRepository implements CountryRepositoryInter
         if ($response) {
             $countryData = json_decode($response, true);
             foreach ($countryData as $country) {
+                $tranlateArray = [];
+
+                foreach ($country['name'] as $locale => $name) {
+                    $tranlateArray[$locale] = ['name' => $name];
+                }
                 $filteredData = [
-                    'name' => $country['name'],
                     'code' => $country['code']
                 ];
+                $filteredData = array_merge($filteredData, $tranlateArray);
                 $this->createOrUpdate('code', $filteredData);
             }
         }
